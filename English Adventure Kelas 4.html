@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Adventure Kelas 4</title>
+<style>
+:root{--bg:#e6f4ff;--card:#fff;--tx:#2b2d42;--pr:#0984e3;--ok:#00b894;--no:#ff7675;--ye:#fdcb6e;--sh:0 6px 0 rgba(0,0,0,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10243d;--card:#1b3a5e;--tx:#eef7ff}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font-family:"Baloo 2","Comic Sans MS","Trebuchet MS",sans-serif;font-size:18px;min-height:100vh;overflow-x:hidden}
+.wrap{max-width:720px;margin:0 auto;padding:14px}
+.top{display:flex;align-items:center;gap:10px}
+.bar{flex:1;height:16px;background:rgba(9,132,227,.2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#74b9ff,#a29bfe,#fd79a8);border-radius:99px;transition:width .5s}
+.pill{background:var(--ye);color:#2b2d42;border-radius:99px;padding:4px 12px;font-weight:700;white-space:nowrap}
+button{font:inherit;cursor:pointer}
+.mute{border:0;background:var(--card);color:var(--tx);border-radius:50%;width:42px;height:42px;font-size:20px;box-shadow:var(--sh)}
+.card{background:var(--card);border-radius:24px;padding:18px;margin-top:14px;box-shadow:var(--sh);animation:pop .4s}
+.hero{text-align:center}
+.hero h1{margin:4px 0;font-size:30px;color:var(--pr)}
+.mas{font-size:72px;display:inline-block;animation:bob 1.6s ease-in-out infinite}
+.mas.hop{animation:hop .6s}.mas.shk{animation:shk .5s}
+.tag{display:inline-block;background:#dbeeff;color:#0b4f8a;border-radius:99px;padding:2px 12px;font-size:14px;font-weight:700}
+.q{line-height:1.5;margin:10px 0}
+.q .read{background:#fff3c4;color:#2b2d42;border-radius:14px;padding:10px 12px;margin-bottom:8px;display:block;font-style:italic}
+.opt{display:block;width:100%;text-align:left;border:3px solid #cfe6fb;background:var(--card);color:var(--tx);border-radius:16px;padding:12px 14px;margin:9px 0;box-shadow:0 4px 0 #cfe6fb;transition:transform .15s}
+.opt:hover:not(:disabled){transform:translateY(-3px);border-color:var(--pr)}
+.opt.sel{border-color:var(--pr);background:#e3f1ff;color:#2b2d42}
+.opt.ok{border-color:var(--ok);background:#d4f8ec;color:#064;animation:hop .6s}
+.opt.no{border-color:var(--no);background:#ffe3e3;color:#900;animation:shk .5s}
+.go{border:0;background:var(--pr);color:#fff;border-radius:99px;padding:12px 26px;font-weight:700;box-shadow:0 5px 0 #065a9e;margin-top:8px}
+.go:active{transform:translateY(4px);box-shadow:none}
+input[type=text]{font:inherit;width:100%;padding:12px;border-radius:14px;border:3px solid #cfe6fb;background:var(--card);color:var(--tx)}
+.fb{margin-top:10px;padding:12px;border-radius:16px;font-weight:700;animation:pop .3s}
+.fb.ok{background:#d4f8ec;color:#064}.fb.no{background:#ffe9d6;color:#8a3b00}
+.cf{position:fixed;top:-30px;font-size:26px;pointer-events:none;animation:fall 2.4s linear forwards;z-index:9}
+.stars{font-size:44px}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:none;opacity:1}}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+@keyframes hop{30%{transform:translateY(-22px) scale(1.1)}60%{transform:translateY(0)}80%{transform:translateY(-8px)}}
+@keyframes shk{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><span class="pill" id="sc">⭐ 0</span><div class="bar"><i id="pb"></i></div><button class="mute" id="mu" aria-label="Suara">🔊</button></div>
+ <div id="app"></div>
+</div>
+<script>
+var BS=['Benar','Salah'],J=['Pancake','Square','Lunch','Ice cream','Chess','Dinner'];
+var Q=[
+{k:'p',t:'Morning Activities',r:'Every morning, my family is busy. Father reads the newspaper in the living room. Mother cooks breakfast in the kitchen. My sister waters the plants in the yard. I make my bed in my room.',q:'What does Mother do in the morning?',o:['She reads the newspaper.','She cooks breakfast.','She waters the plants.','She makes the bed.'],a:1},
+{k:'p',t:'Morning Activities',r:'Father reads the newspaper. Mother cooks breakfast. My sister waters the plants in the yard. I make my bed.',q:'Who waters the plants in the yard?',o:['Father','Mother','My sister','I'],a:2},
+{k:'p',t:'Helping at Home',r:'In Rina’s house, everyone has a morning job. Father sweeps the yard. Mother cooks breakfast. Rina washes the dishes, and her brother feeds the cat. They help each other, so the house is clean and ready before school.',q:'What can we learn from the text?',o:['We should help each other at home.','Only mothers must do housework.','Children should play before helping.','Housework makes everyone tired.'],a:0},
+{k:'p',t:'Telling Time ⏰',r:'It is a quarter to seven.',q:'Penulisan waktu digital yang sesuai adalah …',o:['06.15','07.15','06.30','06.45'],a:3},
+{k:'p',t:'Telling Time ⏰',q:'Bimo melihat jam di aula sekolah, tetapi belum bisa membacanya. Kalimat tanya yang tepat untuk bertanya kepada temannya adalah …',o:['What is your name?','What time is it?','Where do you live?','How old are you?'],a:1},
+{k:'p',t:'Sequence of Routine',r:'Dani wakes up at 05.30. He prays and brushes his teeth at 05.40. Then he takes a bath at 05.50. At 06.15, he has breakfast with his family. He goes to school at 06.45.',q:'What does Dani do at 06.15?',o:['He brushes his teeth.','He takes a bath.','He has breakfast.','He goes to school.'],a:2},
+{k:'p',t:'My Toys 🧸',q:'Nina wants a toy that moves by itself when she turns a key at the back. Mainan yang sesuai adalah …',o:['a wind-up toy','a teddy bear','a puzzle','a ball'],a:0},
+{k:'p',t:'Playing with Toys',r:'A top spins fast when its body is balanced. Ali’s top is bent, so it is not balanced.',q:'What will happen when Ali spins his top?',o:['It spins for a very long time.','It changes its color.','It flies up to the sky.','It wobbles and falls quickly.'],a:3},
+{k:'p',t:'Borrowing Toys',r:'Rina: May I borrow your robot, Dito?<br>Dito: Sure, but please be careful.<br>Rina: Thank you! I will return it this afternoon.',q:'Which attitude is the best when we borrow a toy?',o:['Take it without asking.','Ask politely and return it on time.','Keep it for a long time.','Return it in a broken condition.'],a:1},
+{k:'p',t:'Safe Places to Play',q:'⚽ Dika wants to play with his ball. Where is the safest place to play?',o:['In the street, because there is a lot of space.','On the stairs, because it is high.','In the park, because it is wide and far from vehicles.','In the kitchen, because it is warm.'],a:2},
+{k:'p',t:'Sinta’s Morning',r:'Sinta wakes up at six o’clock. She makes her bed and folds her blanket by herself. At 06.15, she takes a bath. Then she has breakfast at 06.45. After that, she prepares her books and puts on her uniform without being asked.',q:'Which statement is true about Sinta?',o:['She makes her bed after she wakes up.','She has breakfast at six o’clock.','She takes a bath at 07.00.','She wakes up at 06.45.'],a:0},
+{k:'p',t:'Sinta’s Morning',r:'Sinta wakes up at six o’clock. She makes her bed. At 06.15, she takes a bath. Then she has breakfast at 06.45.',q:'Which statement about the order of Sinta’s activities is correct?',o:['Sinta has breakfast at 06.15.','Sinta has breakfast before she takes a bath.','Sinta takes a bath at 06.45.','Sinta takes a bath before she has breakfast.'],a:3},
+{k:'p',t:'Sinta’s Morning',r:'Sinta makes her bed by herself, prepares her books, and puts on her uniform without being asked.',q:'Which conclusion about Sinta is correct?',o:['Sinta is lazy.','Sinta is responsible because she does her tasks by herself.','Sinta always waits for help.','Sinta forgets her morning tasks.'],a:1},
+{k:'p',t:'Snack Time 🍫',r:'Ali: What snack do you like, Ina?<br>Ina: I like crackers. They are salty and crunchy.<br>Ali: I like chocolate. It is sweet and smooth.',q:'Which statement is true?',o:['Crackers are sweet.','Crackers are sour.','Crackers are salty.','Chocolate is spicy.'],a:2},
+{k:'p',t:'Morning Verbs',r:'I ______ to school at 06.30 every morning.',q:'Kata kerja yang tepat untuk melengkapi kalimat adalah …',o:['brush','go','wash','sleep'],a:1},
+{k:'p',t:'Morning Activity',r:'🚴‍♀️🌳 Dina ______ in the park every morning.',q:'Frasa yang tepat untuk melengkapi kalimat adalah …',o:['rides a bicycle','takes a bath','cooks rice','watches TV'],a:0},
+{k:'p',t:'Telling Time ⏰',q:'🕖 Jarum pendek jam menunjuk angka 7 dan jarum panjang menunjuk angka 12. Ungkapan waktu yang tepat adalah …',o:['half past seven','twelve o’clock','a quarter past seven','seven o’clock'],a:3},
+{k:'p',t:'Meal Times',r:'We eat lunch ______ .',q:'Keterangan waktu yang tepat adalah …',o:['in the morning','at night','at noon','at midnight'],a:2},
+{k:'p',t:'Taste of Food 🌶️',r:'🍜🌶️ Rudi puts ten red chilies into his noodles.',q:'The noodles taste ______ .',o:['spicy','sweet','sour','salty'],a:0},
+{k:'p',t:'Food Vocabulary 🧀',q:'Arti kata <b>cheese</b> dalam bahasa Indonesia adalah …',o:['selai','keju','mentega','madu'],a:1},
+{k:'b',t:'Benar atau Salah?',r:'Mom: Dinner is ready. Please put the soup on the dining table.<br>Dina: Yes, Mom. We will eat in the dining room.',q:'The family will eat dinner in the dining room.',o:BS,a:0},
+{k:'b',t:'Benar atau Salah?',r:'Mom: What would you like to drink, Tono?<br>Tono: I want orange juice, please.<br>Dad: I want a cup of tea.',q:'Tono drinks milk.',o:BS,a:1},
+{k:'b',t:'Benar atau Salah?',r:'“Lunch is ready! Come to the table, please.”',q:'The speaker invites the family to have lunch.',o:BS,a:0},
+{k:'b',t:'Benar atau Salah?',r:'Tina: Do you like mango pudding?<br>Rudi: Yes, I do. It is sweet and soft.',q:'Mango pudding is sour and hard.',o:BS,a:1},
+{k:'b',t:'Benar atau Salah?',r:'It is a quarter past seven.',q:'Penulisan waktu digitalnya adalah 07.15.',o:BS,a:0},
+{k:'p',t:'Jodohkan 🔗',q:'Dina eats rice and vegetables at twelve o’clock. Her meal is called …',o:J,a:2},
+{k:'p',t:'Jodohkan 🔗',q:'This breakfast is round, sweet, and soft. It is served hot with syrup. It is …',o:J,a:0},
+{k:'p',t:'Jodohkan 🔗',q:'This dessert is sweet, cold, and soft. People eat it with a spoon on a hot day. It is …',o:J,a:3},
+{k:'p',t:'Jodohkan 🔗',q:'A flat shape has four equal sides and four corners. Its letters are U – A – S – Q – R – E. It is a …',o:J,a:1},
+{k:'p',t:'Jodohkan 🔗',q:'The letters S – H – C – E – S make the name of a board game. It is …',o:J,a:4},
+{k:'m',t:'Pilih 3 Jawaban',r:'Dina: What are Father and Mother eating?<br>Rani: (1) ___ are eating fried rice.<br>Dina: What is Budi eating?<br>Rani: (2) ___ is eating bread.<br>Dina: And what are you and I eating?<br>Rani: (3) ___ are eating soup.',q:'Pilih <b>3</b> kata ganti (pronoun) yang tepat untuk (1), (2), dan (3)!',o:['We','She','They','He','It'],a:[0,2,3]},
+{k:'m',t:'Pilih 3 Jawaban',r:'On Sunday, my family does not hurry. We have breakfast together in the dining room. Mom makes pancakes and Dad makes hot tea. We talk and laugh at the table. It is our happy weekend breakfast.',q:'Pilih <b>3</b> judul yang paling sesuai dengan teks!',o:['My Favorite Toy','Weekend Breakfast with My Family','A Happy Family Breakfast','Going to School','Our Sunday Breakfast Together'],a:[1,2,4]},
+{k:'m',t:'Pilih 3 Jawaban',q:'⚽ Tono has a small ball. Pilih <b>3</b> kosakata bentuk (shape) yang tepat untuk bola tersebut!',o:['square','round','sphere','triangle','circle'],a:[1,2,4]},
+{k:'m',t:'Pilih 3 Jawaban',r:'I want to fly a kite 🪁 with my brother at the ______ .',q:'Pilih <b>3</b> tempat terbuka yang sesuai!',o:['kitchen','field','bathroom','park','beach'],a:[1,3,4]},
+{k:'m',t:'Pilih 3 Jawaban',q:'Pilih <b>3</b> padanan nama mainan tradisional yang benar!',o:['boneka = book','kelereng = marbles','layang-layang = kite','mobil-mobilan = flower','gasing = top'],a:[1,2,4]},
+{k:'i',t:'Isian Singkat',r:'On Sunday, Mom and Dad make breakfast together. They cook eggs and rice. Then, they call me and my sister to the table.',q:'Kata “They” pada kalimat kedua merujuk pada ……',a:['mom and dad','dad and mom','mom & dad','ibu dan ayah','ayah dan ibu']},
+{k:'i',t:'Isian Singkat',r:'Every morning, the family has breakfast in the dining room. Dad puts the plates on the table. Mom serves bread and eggs.',q:'Everyone sits and …… breakfast together. (kata kerja)',a:['eat','eats','have','has']},
+{k:'i',t:'Isian Singkat',r:'🧱 Rina plays with red, blue, and yellow building blocks and builds a house.',q:'The colorful blocks help Rina learn colors and …… .',a:['shapes','shape','building']},
+{k:'i',t:'Isian Singkat',r:'Players throw a dice and move colored pawns around a board. The first player who reaches home wins.',q:'Nama permainan tersebut dalam bahasa Inggris adalah ……',a:['ludo']},
+{k:'i',t:'Isian Singkat',r:'🎲 This board game has a board with numbers 1–100, a dice, and pictures of snakes and ladders.',q:'Tuliskan nama permainan tersebut dalam bahasa Inggris!',a:['snakes and ladders','snakes & ladders','snake and ladders','snakes and ladder']}
+];
+var PUJI=['Hebat sekali! Jawabanmu benar!','Wah, pintar! Kamu benar!','Luar biasa! Pertahankan ya!','Yeay! Benar sekali, kamu keren!'];
+var SEMANGAT=['Tidak apa-apa. Ayo semangat, coba lagi di soal berikutnya!','Jangan menyerah ya. Kamu pasti bisa!','Hampir benar! Terus belajar ya, kamu hebat!','Salah itu wajar. Ayo bangkit dan lanjutkan!'];
+var i=0,sc=0,on=true,sel=[],done=false,ac=null,$=function(x){return document.getElementById(x)};
+function tone(f,t,d,ty){if(!on)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.type=ty||'triangle';o.frequency.value=f;g.gain.setValueAtTime(.2,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+d);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+d)}catch(e){}}
+function say(s){if(!on||!window.speechSynthesis)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(s);u.lang='id-ID';u.rate=.95;u.pitch=1.3;speechSynthesis.speak(u)}catch(e){}}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function good(){[523,659,784,1047].forEach(function(f,n){tone(f,n*.12,.25)});say(pick(PUJI));confetti()}
+function bad(){tone(330,0,.25,'sine');tone(262,.22,.4,'sine');say(pick(SEMANGAT))}
+function confetti(){var e=['🎉','⭐','🎈','✨','🌟','🍭'];for(var n=0;n<24;n++){var s=document.createElement('span');s.className='cf';s.textContent=e[n%6];s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(s);setTimeout(function(x){x.remove()}.bind(null,s),3200)}}
+function mas(c){var m=$('mas');if(m){m.className='mas '+c;m.textContent=c=='hop'?'🥳':'🤗'}}
+$('mu').onclick=function(){on=!on;this.textContent=on?'🔊':'🔇';if(!on&&window.speechSynthesis)speechSynthesis.cancel()};
+function intro(){$('pb').style.width='0';$('app').innerHTML='<div class="card hero"><div class="mas">🐰</div><h1>English Adventure</h1><p>Hello, friends! Aku Mimi si Kelinci. Yuk jawab '+Q.length+' soal seru Bahasa Inggris tentang morning routine, meal time, dan my toys. Jawaban benar dapat bintang ⭐ dan tepuk tangan!</p><button class="go" id="st">Let’s Start! 🚀</button></div>';$('st').onclick=function(){i=0;sc=0;$('sc').textContent='⭐ 0';tone(600,0,.15);say('Halo teman-teman! Ayo kita mulai petualangan!');show()}}
+function show(){done=false;sel=[];var q=Q[i],h='<div class="card"><span class="tag">Soal '+(i+1)+' dari '+Q.length+' · '+q.t+'</span><div class="q">'+(q.r?'<span class="read">'+q.r+'</span>':'')+q.q+'</div>';
+if(q.k=='i')h+='<input type="text" id="in" placeholder="Ketik jawabanmu di sini…" autocomplete="off"><button class="go" id="ck">Check ✔️</button>';
+else{q.o.forEach(function(o,n){h+='<button class="opt" data-n="'+n+'">'+(q.k=='b'?(n?'❌ ':'✅ '):String.fromCharCode(65+n)+'. ')+o+'</button>'});if(q.k=='m')h+='<button class="go" id="ck">Check ✔️</button>'}
+h+='<div id="fb"></div><div style="text-align:center"><span class="mas" id="mas">🐰</span></div></div>';$('app').innerHTML=h;$('pb').style.width=(i/Q.length*100)+'%';
+document.querySelectorAll('.opt').forEach(function(x){x.onclick=function(){if(done)return;var n=+x.dataset.n;if(q.k=='m'){var p=sel.indexOf(n);if(p<0)sel.push(n);else sel.splice(p,1);x.classList.toggle('sel')}else fin(q.a==n,[n])}});
+if($('ck'))$('ck').onclick=function(){if(done)return;if(q.k=='i'){var v=$('in').value.trim().toLowerCase().replace(/[.!]+$/,'').replace(/\s+/g,' ');if(!v)return;fin(q.a.indexOf(v)>=0)}else{if(sel.length!=q.a.length){$('fb').innerHTML='<div class="fb no">Pilih tepat '+q.a.length+' jawaban dulu ya! 😊</div>';return}fin(sel.slice().sort().join()==q.a.join())}}}
+function fin(ok,pk){done=true;var q=Q[i],ans=q.k=='i'?q.a[0]:'';
+document.querySelectorAll('.opt').forEach(function(x){x.disabled=true;var n=+x.dataset.n,c=q.k=='m'?q.a.indexOf(n)>=0:q.a==n;if(c)x.classList.add('ok');else if(x.classList.contains('sel')||(pk&&pk[0]==n))x.classList.add('no')});
+if($('ck'))$('ck').style.display='none';if($('in'))$('in').disabled=true;
+var f=ok?'<div class="fb ok">🎉 Benar! Kamu dapat 1 bintang ⭐</div>':'<div class="fb no">💪 Belum tepat. '+(q.k=='i'?'Jawaban yang benar: <u>'+ans+'</u>. ':'Jawaban benar ditandai hijau. ')+'Semangat ya!</div>';
+if(ok){sc++;$('sc').textContent='⭐ '+sc;good();mas('hop')}else{bad();mas('shk')}
+$('fb').innerHTML=f+'<div style="text-align:center"><button class="go" id="nx">'+(i==Q.length-1?'Lihat Hasil 🏆':'Next ➡️')+'</button></div>';
+$('nx').onclick=function(){if(window.speechSynthesis)speechSynthesis.cancel();i++;i<Q.length?show():end()}}
+function end(){var p=Math.round(sc/Q.length*100),s=p>=80?'⭐⭐⭐':p>=50?'⭐⭐':'⭐',m=p>=80?'Luar biasa! Kamu juara Bahasa Inggris!':p>=50?'Bagus! Sedikit lagi kamu jadi juara!':'Kamu sudah berusaha keras. Yuk coba lagi!';
+$('pb').style.width='100%';$('app').innerHTML='<div class="card hero"><div class="mas">'+(p>=50?'🏆':'🌈')+'</div><h1>Adventure Complete!</h1><div class="stars">'+s+'</div><p>Skormu <b>'+sc+'</b> dari '+Q.length+' ('+p+')</p><p>'+m+'</p><button class="go" id="rs">Play Again 🔄</button></div>';
+if(p>=50){good()}else{tone(392,0,.3);say(m)}$('rs').onclick=intro}
+intro();
+</script>
+</body>
+</html>
